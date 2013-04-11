@@ -1,21 +1,11 @@
-package server
+package gopusher
 
 import (
+	"bytes"
+	"io/ioutil"
 	"net/http"
-  "io/ioutil"
-  "bytes"
 )
 
-type Pusher struct{
-	appId string
-	appKey string
-	appSecret string
-	poster Poster
-}
-
-func CreatePusher() Pusher{
-	return Pusher{poster : PusherHttpEndpoint{}}
-}
 //error if keys are not set
 //  when? On instantiate or on Trigger()
 
@@ -24,15 +14,15 @@ func CreatePusher() Pusher{
 //auth
 //createSignedQueryString
 
-type Poster interface{
-	post(body []byte)(data *string, err error)
+type Poster interface {
+	post(body []byte) (data *string, err error)
 }
 
-type PusherHttpEndpoint struct{
+type PusherHttpEndpoint struct {
 	url string
 }
 
-func (this PusherHttpEndpoint) post(data []byte)(*string, error){
+func (this PusherHttpEndpoint) post(data []byte) (*string, error) {
 	httpclient := &http.Client{}
 	req, err := http.NewRequest("POST", this.url, bytes.NewBuffer(data))
 	resp, err := httpclient.Do(req)
@@ -50,7 +40,5 @@ func (p Pusher) Trigger(channel, event string, data interface{}) string {
 	//data collect and parse
 	//post
 
-
 	return "ok"
 }
-
