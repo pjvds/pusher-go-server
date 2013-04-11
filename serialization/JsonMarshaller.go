@@ -7,12 +7,12 @@ import (
 
 type JsonMarshaller struct {
 	Indent string
-	Format     bool
+	Format bool
 }
 
 func NewJsonMarshaller() *JsonMarshaller {
 	return &JsonMarshaller{
-        IndentRune: "\t"
+		Indent: "\t",
 		Format: false,
 	}
 }
