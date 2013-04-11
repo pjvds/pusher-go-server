@@ -1,14 +1,16 @@
 package gopusher
 
-import("github.com/pjvds/pusher-go-server/serialization")
+import (
+	"github.com/pjvds/pusher-go-server/serialization"
+)
 
 // Represents the state of the Pusher context.
 type Pusher struct {
-	appId     string
-	appKey    string
-	appSecret string
-	poster    Poster
-    marshaller serialization.Marshaller
+	appId      string
+	appKey     string
+	appSecret  string
+	poster     Poster
+	marshaller serialization.Marshaller
 }
 
 func CreatePusher(appId, appKey, appSecret string, poster Poster) *Pusher {
@@ -20,7 +22,15 @@ func CreatePusher(appId, appKey, appSecret string, poster Poster) *Pusher {
 }
 
 func (p Pusher) Trigger(channel, event string, data interface{}) string {
+	var postData map[string]interface{}
+	postData["event"] = event
+	postData["data"] = data
 
-    map[string]interface{}
-    return "ok"
+	payload, _ := p.marshaller.Marshal(data)
+	_, err := p.poster.post(payload)
+
+	if err != nil {
+		return err.Error()
+	}
+	return "ok"
 }
