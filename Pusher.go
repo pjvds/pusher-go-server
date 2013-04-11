@@ -13,12 +13,14 @@ type Pusher struct {
 	marshaller serialization.Marshaller
 }
 
-func CreatePusher(appId, appKey, appSecret string, poster Poster) *Pusher {
+func CreatePusher(appId, appKey, appSecret string, poster Poster, marshaller serialization.Marshaller) *Pusher {
 	return &Pusher{
-		appId:     appId,
-		appKey:    appKey,
-		appSecret: appSecret,
-		poster:    poster}
+		appId:      appId,
+		appKey:     appKey,
+		appSecret:  appSecret,
+		poster:     poster,
+		marshaller: marshaller,
+	}
 }
 
 func (p Pusher) Trigger(channel, event string, data interface{}) string {

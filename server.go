@@ -14,10 +14,6 @@ import (
 //auth
 //createSignedQueryString
 
-type Poster interface {
-	post(body []byte) (data *string, err error)
-}
-
 type PusherHttpEndpoint struct {
 	url string
 }
