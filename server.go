@@ -35,10 +35,3 @@ func (this PusherHttpEndpoint) post(data []byte) (*string, error) {
 	body := string(responseData)
 	return &body, err
 }
-
-func (p Pusher) Trigger(channel, event string, data interface{}) string {
-	//data collect and parse
-	//post
-
-	return "ok"
-}
