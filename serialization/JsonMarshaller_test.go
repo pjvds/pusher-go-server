@@ -72,6 +72,21 @@ func TestUnMarshall(t *testing.T) {
 	}
 }
 
+func TestMarshalAnonymousStruct(t *testing.T) {
+    marshaller := getUnformattedMarshaller()
+    data := struct{
+        Name: "Pieter Joost",
+        Value: 42,
+    }
+
+    json := string(data)
+
+    expected := "{\n\t\"Name\": \"Pieter Joost\",\n\t\"Value\": 42\n}"
+    if json != expected {
+        t.Errorf("invalid json output: '%v' should be '%v", json, expected)
+    }
+}
+
 func getUnformattedMarshaller() JsonMarshaller {
 	m := NewJsonMarshaller()
 	m.Format = false

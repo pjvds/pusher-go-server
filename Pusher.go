@@ -25,8 +25,8 @@ func CreatePusher(appId, appKey, appSecret string, poster Poster, marshaller ser
 
 func (p Pusher) Trigger(channel, event string, data interface{}) string {
 	postData := struct {
-		event string
-		data  interface{}
+		Event string
+		Data  interface{}
 	}{
 		event,
 		data,

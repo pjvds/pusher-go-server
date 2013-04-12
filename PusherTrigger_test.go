@@ -8,8 +8,8 @@ var (
 	aChannel = "mychannel"
 	aEvent   = "gopher-stolen"
 	someData = struct {
-		name    string
-		company string
+		Name    string
+		Company string
 	}{
 		"Pieter Joost van de Sande",
 		"Wercker",
@@ -34,10 +34,11 @@ func (this MockPoster) post(body []byte) (data *string, err error) {
 }
 
 func TestTriggerPostsCorrectJson(t *testing.T) {
-	var postData []byte
+	var postData string
+	expected := "{\"Event\":\"gopher-stolen\",\"Data\":{\"Name\":\"Pieter Joost van de Sande\",\"Company\":\"Wercker\"}}"
 	mockedPoster := &MockPoster{
 		sideEffect: func(body []byte) (*string, error) {
-			postData = body
+			postData = string(body)
 			result := "ok"
 			return &result, nil
 		},
@@ -47,6 +48,7 @@ func TestTriggerPostsCorrectJson(t *testing.T) {
 
 	pusher.Trigger(aChannel, aEvent, someData)
 
-	println("data:")
-	println(string(postData))
+	if postData != expected {
+		t.Errorf("Wrong post data set: %v\nExpected: %v", postData, expected)
+	}
 }
