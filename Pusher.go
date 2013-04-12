@@ -24,11 +24,15 @@ func CreatePusher(appId, appKey, appSecret string, poster Poster, marshaller ser
 }
 
 func (p Pusher) Trigger(channel, event string, data interface{}) string {
-	var postData map[string]interface{}
-	postData["event"] = event
-	postData["data"] = data
+	postData := struct {
+		event string
+		data  interface{}
+	}{
+		event,
+		data,
+	}
 
-	payload, _ := p.marshaller.Marshal(data)
+	payload, _ := p.marshaller.Marshal(postData)
 	_, err := p.poster.post(payload)
 
 	if err != nil {

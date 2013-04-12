@@ -5,14 +5,6 @@ import (
 	"testing"
 )
 
-var (
-	aAppId      = "myappid"
-	aAppKey     = "myappkey"
-	aAppSecret  = "myappsecret"
-	aPoster     = &NullPoster{}
-	aMarshaller = serialization.NewJsonMarshaller()
-)
-
 func TestCreatePusherInitializesAppId(t *testing.T) {
 	theAppId := "theappid"
 	result := CreatePusher(theAppId, aAppKey, aAppSecret, aPoster, aMarshaller)
